@@ -533,7 +533,7 @@ begin
       for I := 0 to pred(ContextMenuActionList.Count) do
       begin
         sAct := ContextMenuActionList.ExtActionCommand[I].ActionName;
-        if (SysUtils.CompareText('OPEN', sAct) <> 0) and (SysUtils.CompareText('VIEW', sAct) <> 0) and (SysUtils.CompareText('EDIT', sAct) <> 0) and (pos('Copy Filename', sAct) = 0) then
+        if (SysUtils.CompareText('OPEN', sAct) <> 0) and (SysUtils.CompareText('VIEW', sAct) <> 0) and (SysUtils.CompareText('EDIT', sAct) <> 0) and (CompareText('COPY', sAct) = 0) then
           LocalInsertMenuItem(sAct,  I);
       end;
     end;
@@ -544,6 +544,10 @@ begin
     // Lilx: add 'copy full name path' to context menu
     I := ContextMenuActionList.Add(TExtActionCommand.Create(rsMenuCopyFullPath, '{!COPYFULLPATH}', QuoteStr(aFile.FullPath), ''));
     LocalInsertMenuItem(ContextMenuActionList.ExtActionCommand[I].ActionName, I);    
+    
+    I := ContextMenuActionList.Add(TExtActionCommand.Create(rsMenuSearch, '{!SEARCH}', QuoteStr(aFile.FullPath), ''));
+    LocalInsertMenuItem(ContextMenuActionList.ExtActionCommand[I].ActionName, I);    
+     
     LocalInsertMenuSeparator;
 
     I := ContextMenuActionList.Add(TExtActionCommand.Create(rsMnuView, '{!VIEWER}', QuoteStr(aFile.FullPath), ''));
